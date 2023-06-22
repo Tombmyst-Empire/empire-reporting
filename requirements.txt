@@ -1,0 +1,2 @@
+git+https://github.com/Tombmyst-Empire/empire-commons.git#egg=empire-commons
+git+https://github.com/Tombmyst-Empire/empire-data.git#
