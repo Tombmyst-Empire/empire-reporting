@@ -59,3 +59,20 @@ class Levels:
     ERROR: Final[Level] = Level(60, 'ERROR')
     SEVERE: Final[Level] = Level(70, 'SEVERE')
     FATAL: Final[Level] = Level(80, 'FATAL')
+
+    @staticmethod
+    def parse_from_string(level: str) -> Level:
+        return _STRING_TO_LEVEL[level.lower()]
+
+
+_STRING_TO_LEVEL = {
+    'all': Levels.ALL,
+    'trace': Levels.TRACE,
+    'debug': Levels.DEBUG,
+    'success': Levels.SUCCESS,
+    'info': Levels.INFO,
+    'warn': Levels.WARN,
+    'error': Levels.ERROR,
+    'severe': Levels.SEVERE,
+    'fatal': Levels.FATAL
+}

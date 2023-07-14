@@ -31,10 +31,13 @@ class DefaultFormatter(BaseFormatter):
     """
 
     def format(self, report: Report) -> str:
+        effective_module: str = report.module[:30]
+        effective_function: str = report.function[:30]
+
         return f'[{report.date_time}] ' \
                f'[{str(report.level):^7}] ' \
-               f'[{report.reporter_name:<7}] ' \
-               f'[({report.line:0>4}) {report.module:<15}::{report.function:<25}] ' \
+               f'[{report.reporter_name.upper():^8}] ' \
+               f'[({report.line:0>4}) {effective_module:<30}::{effective_function:<30}] ' \
                f'{report.message}'
 
 
@@ -61,11 +64,14 @@ class ColoredFormatter(BaseFormatter):
     @staticmethod
     def get_report_string(report: Report, colors: frozendict[Level, Color4Bits]) -> str:
         color = ConsoleCharacters.set_foreground_4bits(colors[report.level])
+        effective_module: str = report.module[:30]
+        effective_function: str = report.function[:30]
+
         return f'{color}' \
                f'[{report.date_time}] ' \
-               f'[{str(report.level):^7}] ' \
-               f'[{report.reporter_name:<7}] ' \
-               f'[({report.line:0>4}) {report.module:<15}::{report.function:<25}] ' \
+               f'[{str(report.level):^8}] ' \
+               f'[{report.reporter_name.upper():^8}] ' \
+               f'[({report.line:0>4}) {effective_module:<30}::{effective_function:<30}] ' \
                f'{ConsoleCharacters.set_bold()}' \
                f'{report.message}' \
                f'{ConsoleCharacters.reset()}'

@@ -33,7 +33,7 @@ class ReporterOutletFile(ReporterOutlet):
     )
 
     def __init__(self, file: str, formatter: BaseFormatter = None, *, truncate: bool = True):
-        super().__init__(formatter)
+        super().__init__(formatter or DefaultFormatter())
         self._file = open(file, 'w' if truncate else 'a', encoding='utf8', buffering=1)
         self._file_opened = True
 
@@ -50,3 +50,4 @@ if __name__ == '__main__':
     from ereport.formatter import AdaptativeColoredFormatter
     outlet = ReporterOutletStdOut(AdaptativeColoredFormatter())
     outlet.emit(Report(Levels.WARN, 'module', 'func', 123, 'message', 'reporter'))
+    outlet.emit(Report(Levels.ERROR, 'string_creation_vs_reuse', 'diff_json_different_values', 123, 'message', 'reporter'))
