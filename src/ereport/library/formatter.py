@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any, Final
 
 from econsole.styles import Color4Bits, ConsoleCharacters
-from edata.sun import SunData, Sun
+from edata.sun import Sun
 from empire_commons.types_ import JsonType
 from frozendict import frozendict
 
-from ereport.level import Level, Levels
-from ereport.report import Report
+from ereport.library.level import Level, Levels
+from ereport.library.report import Report
 
 
 class BaseFormatter(ABC):

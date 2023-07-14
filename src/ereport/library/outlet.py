@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from ereport.formatter import DefaultFormatter, BaseFormatter
-from ereport.report import Report
+from ereport.library.formatter import DefaultFormatter, BaseFormatter
+from ereport.library.report import Report
 
 
 class ReporterOutlet(ABC):
@@ -46,8 +46,8 @@ class ReporterOutletFile(ReporterOutlet):
 
 
 if __name__ == '__main__':
-    from ereport.level import Levels
-    from ereport.formatter import AdaptativeColoredFormatter
+    from ereport.library.level import Levels
+    from ereport.library.formatter import AdaptativeColoredFormatter
     outlet = ReporterOutletStdOut(AdaptativeColoredFormatter())
     outlet.emit(Report(Levels.WARN, 'module', 'func', 123, 'message', 'reporter'))
     outlet.emit(Report(Levels.ERROR, 'string_creation_vs_reuse', 'diff_json_different_values', 123, 'message', 'reporter'))

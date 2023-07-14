@@ -1,6 +1,6 @@
 from empire_commons.date_util.date_util import current_yyyy_mm_dd_hh_ii_ss_ffff
 
-from src.ereport.level import Level
+from ereport.library.level import Level
 
 
 class Report:

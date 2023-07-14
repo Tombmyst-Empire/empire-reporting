@@ -3,10 +3,10 @@ from __future__ import annotations
 import os
 from inspect import currentframe
 
-from ereport.formatter import AdaptativeColoredFormatter
-from ereport.outlet import ReporterOutlet, ReporterOutletStdOut
-from ereport.level import Level, Levels
-from ereport.report import Report
+from ereport.library.formatter import AdaptativeColoredFormatter
+from ereport.library.outlet import ReporterOutlet, ReporterOutletStdOut
+from ereport.library.level import Level, Levels
+from ereport.library.report import Report
 
 
 class Reporter:
@@ -144,105 +144,6 @@ class Reporter:
         return currentframe().f_back.f_back.f_lineno
 
 
-_DEFAULT_REPORTER = Reporter('MAIN', Levels.parse_from_string(os.getenv('LOGGING_LEVEL', 'INFO')))
-
-
-def trace(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.TRACE):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.TRACE,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
-def debug(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.DEBUG):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.DEBUG,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
-def success(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.SUCCESS):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.SUCCESS,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
-def info(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.INFO):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.INFO,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
-def warn(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.WARN):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.WARN,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
-def error(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.ERROR):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.ERROR,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
-def severe(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.SEVERE):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.SEVERE,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
-def fatal(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
-    if _DEFAULT_REPORTER._level.can_log(Levels.FATAL):
-        _DEFAULT_REPORTER._log(Report(
-            level=Levels.FATAL,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
-            line=line or _DEFAULT_REPORTER._find_line_number(),
-            message=message,
-            reporter_name=_DEFAULT_REPORTER._reporter_name
-        ))
-
-
 if __name__ == '__main__':
     r = Reporter('test', Levels.TRACE)
     r.trace('Ceci est un test')
@@ -253,12 +154,3 @@ if __name__ == '__main__':
     r.error('Ceci est un error')
     r.severe('Ceci est un severe')
     r.fatal('Ceci est un fatal')
-    print('--------------------------')
-    trace('Ceci est un test')
-    debug('Ceci est un debug')
-    success('Ceci est success')
-    info('Ceci est uin info')
-    warn('Ceci est un wanring')
-    error('Ceci est un error')
-    severe('Ceci est un severe')
-    fatal('Ceci est un fatal')
