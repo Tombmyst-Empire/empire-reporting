@@ -1,4 +1,4 @@
-![](doc/header.png)
+![](docs/_static/header.png)
 
 <div style="text-align: center">
     <img src="https://forthebadge.com/images/badges/made-with-python.svg">
@@ -6,8 +6,12 @@
     <img src="https://forthebadge.com/images/badges/built-by-codebabes.svg">
 </div>
 
-# Empire -- Reporting
+# EMPIRE -- REPORTING
 
 ---
 
-<i>Improved and augmented logging module</i>
+<i>An alternative to logging</i>
+
+---
+
+<a href="https://tombmyst-empire.github.io/empire-reporting/html/index.html">Documentation</a>
