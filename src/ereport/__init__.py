@@ -1,11 +1,19 @@
 import os
 
-from ereport.library.level import Levels
+from ereport.library.level import Levels, Level
 from ereport.library.report import Report
 from ereport.library.reporter import Reporter
 
 
 _DEFAULT_REPORTER = Reporter('MAIN', Levels.parse_from_string(os.getenv('LOGGING_LEVEL', 'INFO')))
+
+
+def make_reporter(name: str, env_var_logging_level: str = None, default_level: str | Levels = Levels.INFO) -> Reporter:
+    required_level: Level = (
+        Levels.parse_from_string(os.getenv(env_var_logging_level)) if env_var_logging_level else None
+    ) or default_level
+
+    return Reporter(name, required_level)
 
 
 def trace(message: str, module: str | None = None, function: str | None = None, line: int | None = None):

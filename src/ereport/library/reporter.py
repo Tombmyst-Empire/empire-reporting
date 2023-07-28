@@ -19,6 +19,8 @@ class Reporter:
         '_reporter_name'
     )
 
+    _instances: dict[str, Reporter] = {}
+
     def __init__(self, name: str, level: Level):
         self._outlets: list[ReporterOutlet] = [
             ReporterOutletStdOut(
@@ -26,7 +28,20 @@ class Reporter:
             )
         ]
         self._level: Level = level
-        self._reporter_name: str = name
+        self._reporter_name: str = name.upper()
+        Reporter._instances[name.upper()] = self
+
+    @property
+    def level(self) -> Level:
+        return self._level
+
+    @level.setter
+    def level(self, value: Level):
+        self.level = value
+
+    @property
+    def name(self) -> str:
+        return self.name
 
     def add_outlet(self, outlet: ReporterOutlet) -> Reporter:
         self._outlets.append(outlet)
