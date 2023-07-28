@@ -31,6 +31,19 @@ class Reporter:
         self._reporter_name: str = name.upper()
         Reporter._instances[name.upper()] = self
 
+    @classmethod
+    def get_or_make(cls, name: str, env_var_logging_level: str = None, default_level: str | Levels = Levels.INFO) -> Reporter:
+        name = name.upper()
+
+        required_level: Level = (
+            Levels.parse_from_string(os.getenv(env_var_logging_level)) if env_var_logging_level else None
+        ) or default_level
+
+        if name in Reporter._instances:
+            return Reporter._instances[name]
+
+        return cls(name, required_level)
+
     @property
     def level(self) -> Level:
         return self._level
