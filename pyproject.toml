@@ -22,8 +22,6 @@ classifiers = [
 	"Typing :: Typed"
 ]
 dependencies = [
-    "empire_commons@https://github.com/Tombmyst-Empire/empire-commons/archive/refs/heads/master.zip",
-    "empire-console@https://github.com/Tombmyst-Empire/empire-console/archive/refs/heads/master.zip",
     "empire_data@https://github.com/Tombmyst-Empire/empire-data/archive/refs/heads/master.zip"
 ]
 [project.optional-dependencies]
