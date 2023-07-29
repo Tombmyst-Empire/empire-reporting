@@ -21,7 +21,7 @@ class Report:
             line: int,
             message: str,
             reporter_name: str,
-            date_time: str = None,
+            date_time: str = None
     ):
         self.date_time: str = date_time if date_time else current_yyyy_mm_dd_hh_ii_ss_ffff()
         self.level: Level = level

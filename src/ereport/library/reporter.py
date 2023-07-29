@@ -71,99 +71,175 @@ class Reporter:
     def _log(self, report: Report):
         [outlet.emit(report) for outlet in self._outlets]
 
-    def trace(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def trace(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.TRACE):
             self._log(Report(
                 level=Levels.TRACE,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def debug(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def debug(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.DEBUG):
             self._log(Report(
                 level=Levels.DEBUG,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def success(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def success(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.SUCCESS):
             self._log(Report(
                 level=Levels.SUCCESS,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def info(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def info(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.INFO):
             self._log(Report(
                 level=Levels.INFO,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def warn(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def warn(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.WARN):
             self._log(Report(
                 level=Levels.WARN,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def error(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def error(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.ERROR):
             self._log(Report(
                 level=Levels.ERROR,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def severe(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def severe(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.SEVERE):
             self._log(Report(
                 level=Levels.SEVERE,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def fatal(self, message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+    def fatal(
+            self,
+            message: str,
+            module: str | None = None,
+            function: str | None = None,
+            line: int | None = None,
+            stack_level: int = 0
+    ):
         if self._level.can_log(Levels.FATAL):
             self._log(Report(
                 level=Levels.FATAL,
                 module=module or self._find_module(),
-                function=function or self._find_function(),
+                function=function or self._find_function(stack_level),
                 line=line or self._find_line_number(),
                 message=message,
                 reporter_name=self._reporter_name
             ))
 
-    def _find_module(self) -> str:
-        return os.path.normcase(currentframe().f_back.f_code.co_filename).replace('\\', '/').split('/')[-1].split('.')[0]
+    def _find_module(self, stack_level: int) -> str:
+        name: str = ''
+        try:
+            frame = currentframe().f_back
+            for level in range(stack_level):
+                frame = frame.f_back
 
-    def _find_function(self) -> str:
-        name: str = currentframe().f_back.f_back.f_code.co_name
+            name = frame.f_code.co_filename
+        except AttributeError:
+            print(f'Could not find frame at level {1 + stack_level}')
+            return name
+
+        return os.path.normcase(name).replace('\\', '/').split('/')[-1].split('.')[0]
+
+    def _find_function(self, stack_level: int) -> str:
+        name: str = ''
+        try:
+            frame = currentframe().f_back.f_back
+            for level in range(stack_level):
+                frame = frame.f_back
+
+            name = frame.f_code.co_name
+        except AttributeError:
+            print(f'Could not find frame at level {2 + stack_level}')
+
         if name == '<module>':
             return '<module-level>'
 
