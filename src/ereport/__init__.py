@@ -8,8 +8,8 @@ from ereport.library.reporter import Reporter
 _DEFAULT_REPORTER = Reporter('MAIN', Levels.parse_from_string(os.getenv('LOGGING_LEVEL', 'INFO')))
 
 
-def get_or_make_reporter(name: str, env_var_logging_level: str = None, default_level: str | Levels = Levels.INFO) -> Reporter:
-    return Reporter.get_or_make(name, env_var_logging_level, default_level)
+def get_or_make_reporter(name: str = None, env_var_logging_level: str = None, default_level: str | Levels = Levels.INFO) -> Reporter:
+    return Reporter.get_or_make(name or 'MAIN', env_var_logging_level, default_level)
 
 
 def trace(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
