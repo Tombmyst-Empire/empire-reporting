@@ -2,11 +2,10 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Any, Final
 
-from econsole.styles import Color4Bits, ConsoleCharacters
 from edata.sun import Sun
-from empire_commons.types_ import JsonType
 from frozendict import frozendict
 
+from ereport.library._internal.console_styles import Color4Bits, ConsoleCharacters
 from ereport.library.level import Level, Levels
 from ereport.library.report import Report
 
@@ -141,7 +140,7 @@ class DictFormatter(BaseFormatter):
     def __init__(self, *report_attributes_to_keep: str):
         self._attributes: tuple[str, ...] = report_attributes_to_keep or Report.__slots__
 
-    def format(self, report: Report) -> JsonType:
+    def format(self, report: Report) -> dict:
         return {
             attribute: getattr(report, attribute, None) for attribute in self._attributes
         }

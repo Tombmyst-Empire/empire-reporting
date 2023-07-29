@@ -34,7 +34,7 @@ class Reporter:
     @classmethod
     def get_or_make(cls, name: str, env_var_logging_level: str = None, default_level: str | Levels = Levels.INFO) -> Reporter:
         name = name.upper()
-        
+
         env_level: str | None = os.getenv(env_var_logging_level) if env_var_logging_level else None
         required_level: Level = (
             Levels.parse_from_string(env_level) if env_level else None
