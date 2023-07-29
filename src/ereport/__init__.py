@@ -12,96 +12,96 @@ def get_or_make_reporter(name: str = None, env_var_logging_level: str = None, de
     return Reporter.get_or_make(name or 'MAIN', env_var_logging_level, default_level)
 
 
-def trace(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def trace(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.TRACE):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.TRACE,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
         ))
 
 
-def debug(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def debug(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.DEBUG):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.DEBUG,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
         ))
 
 
-def success(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def success(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.SUCCESS):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.SUCCESS,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
         ))
 
 
-def info(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def info(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.INFO):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.INFO,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
         ))
 
 
-def warn(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def warn(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.WARN):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.WARN,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
         ))
 
 
-def error(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def error(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.ERROR):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.ERROR,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
         ))
 
 
-def severe(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def severe(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.SEVERE):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.SEVERE,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
         ))
 
 
-def fatal(message: str, module: str | None = None, function: str | None = None, line: int | None = None):
+def fatal(message: str, module: str | None = None, function: str | None = None, line: int | None = None, stack_level: int = 0):
     if _DEFAULT_REPORTER._level.can_log(Levels.FATAL):
         _DEFAULT_REPORTER._log(Report(
             level=Levels.FATAL,
-            module=module or _DEFAULT_REPORTER._find_module(),
-            function=function or _DEFAULT_REPORTER._find_function(),
+            module=module or _DEFAULT_REPORTER._find_module(stack_level),
+            function=function or _DEFAULT_REPORTER._find_function(stack_level),
             line=line or _DEFAULT_REPORTER._find_line_number(),
             message=message,
             reporter_name=_DEFAULT_REPORTER._reporter_name
